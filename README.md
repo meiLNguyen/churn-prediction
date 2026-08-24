@@ -1,51 +1,60 @@
-# 🏢 Telco Customer Churn Prediction
+# Telco Customer Churn Prediction
 
-> Dự đoán khách hàng rời mạng (churn) bằng XGBoost — project ML end-to-end đầu tiên.
-> *(Xóa dòng này và điền nội dung thật sau khi hoàn thành — đây là README bạn sẽ đưa lên GitHub để nhà tuyển dụng đọc!)*
+End-to-end machine learning project to predict customer churn (customers leaving the service) using XGBoost, with MLflow experiment tracking.
 
-## 🎯 Mục tiêu project
-<!-- 3-4 câu: bài toán là gì, vì sao chọn, kết quả đạt được bao nhiêu -->
-Xây dựng model phân loại khách hàng có khả năng rời mạng (churn = Yes/No) dựa trên dữ liệu sử dụng dịch vụ.
-Mục tiêu: đạt **AUC ≥ 0.85** trên test set — đủ tốt để công ty chủ động giữ chân khách hàng trước khi họ rời đi.
+<!-- Replace this with your real results after training. This README is the first thing recruiters read! -->
+
+## 🎯 Project Goal
+
+<!-- 3-4 sentences: what problem, why this dataset, what result you achieved -->
+
+Build a binary classifier that predicts whether a customer will churn (`Churn` = Yes/No) based on service usage data. Target: **AUC ≥ 0.85** on the test set — good enough for a company to proactively retain at-risk customers before they leave.
 
 ## 📊 Dataset
-- Nguồn: Telco Customer Churn (IBM) — dataset kinh điển trên Kaggle
-- **7,043 khách hàng · 21 cột** (19 features + customerID + target `Churn`)
-- Phân bố target: No = 5,174 (73.5%) · Yes = 1,869 (26.5%) → **hơi mất cân bằng**
-- Các nhóm feature: thông tin khách hàng (gender, SeniorCitizen...), dịch vụ đang dùng (InternetService, TechSupport...), hợp đồng & phí (Contract, MonthlyCharges...)
 
-## 🛠️ Quy trình (Pipeline)
+- **Source:** [Telco Customer Churn (IBM)](https://www.kaggle.com/datasets/blastchar/telco-customer-churn) — classic benchmark dataset on Kaggle
+- **Size:** 7,043 customers · 21 columns (19 features + `customerID` + target `Churn`)
+- **Target distribution:** No = 5,174 (73.5%) · Yes = 1,869 (26.5%) → slightly imbalanced
+- **Feature groups:** customer info (`gender`, `SeniorCitizen`, ...), subscribed services (`InternetService`, `TechSupport`, ...), contract & billing (`Contract`, `MonthlyCharges`, ...)
+
+## 🛠️ Pipeline
+
 ```
 data/ ──▶ 01_eda.ipynb ──▶ 02_preprocessing ──▶ baseline ──▶ XGBoost ──▶ evaluation
 ```
-1. **EDA** — phân tích phân bố, tương quan feature vs Churn, phát hiện giá trị thiếu (`TotalCharges` có dấu cách)
-2. **Preprocessing** — encode categorical, xử lý missing, train/test split (80/20, stratified)
-3. **Baseline** — DummyClassifier (majority class) + LogisticRegression
-4. **Model** — XGBoost (tune bằng GridSearch/RandomSearch, track bằng MLflow)
-5. **Evaluation** — so sánh baseline vs XGBoost trên **AUC, F1, Precision, Recall, confusion matrix**
 
-## 📈 Kết quả
+1. **EDA** — distribution analysis, feature vs. Churn correlation, missing-value detection (note: `TotalCharges` contains whitespace)
+2. **Preprocessing** — categorical encoding, missing-value handling, 80/20 stratified train/test split
+3. **Baseline** — `DummyClassifier` (majority class) + `LogisticRegression`
+4. **Model** — XGBoost, tuned with GridSearch/RandomSearch, tracked with MLflow
+5. **Evaluation** — baseline vs. XGBoost on **AUC, F1, Precision, Recall, confusion matrix**
+
+## 📈 Results
+
 | Model | AUC | F1 | Precision | Recall |
 |---|---|---|---|---|
 | Dummy (majority) | 0.50 | — | — | — |
 | Logistic Regression | ? | ? | ? | ? |
 | **XGBoost (best)** | **?** | **?** | **?** | **?** |
 
-<!-- Điền số thật sau khi chạy xong — đừng để dấu ? -->
+<!-- Fill in real numbers after training — don't leave the ? marks -->
 
-## 🧠 Bài học rút ra
-<!-- 3-4 bullet: điều thú vị/khó nhất khi làm project này -->
-- *(ví dụ)* `tenure` (thời gian gắn bó) là feature mạnh nhất — khách mới rời nhiều hơn
-- *(ví dụ)* Metric quan trọng nhất cho churn là **Recall** — bỏ sót khách sắp rời còn tệ hơn dự đoán nhầm
+## 🧠 Key Takeaways
 
-## 🚀 Cách chạy
+<!-- 3-4 bullets: most interesting / hardest part of this project -->
+- *(example)* `tenure` (length of customer relationship) is the strongest feature — new customers churn more
+- *(example)* The most important metric for churn is **Recall** — missing a soon-to-churn customer is worse than a false alarm
+
+## 🚀 How to Run
+
 ```bash
 pip install -r requirements.txt
-python src/train.py            # train + eval toàn bộ pipeline
-jupyter notebook notebooks/01_eda.ipynb   # xem EDA từng bước
+python src/train.py          # train + evaluate the full pipeline
+jupyter notebook notebooks/01_eda.ipynb   # step-by-step EDA
 ```
 
-## 🗂️ Cấu trúc repo
+## 🗂️ Repo Structure
+
 ```
 churn-prediction/
 ├── data/Telco-Customer-Churn.csv
@@ -58,5 +67,6 @@ churn-prediction/
 └── README.md
 ```
 
-## 📬 Liên hệ
-<!-- GitHub username của bạn -->
+## 📬 Contact
+
+<!-- Your GitHub username / email -->
