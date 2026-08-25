@@ -9,6 +9,9 @@ env/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
+# Jupyter LSP virtual docs (auto-generated copies for the language server)
+.virtual_documents/
+
 # Data
 data/*.csv
 !data/.gitkeep
