@@ -19,6 +19,7 @@ data/*.csv
 # MLflow
 mlruns/
 mlartifacts/
+mlflow.db
 
 # IDE / OS
 .vscode/
