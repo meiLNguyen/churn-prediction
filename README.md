@@ -35,13 +35,15 @@ data/ ──▶ 01_eda.ipynb ──▶ 02_preprocessing+baseline ──▶ 03_xg
 | XGBoost (best) | 0.8062 | 0.8433 | 0.6700 | 0.5321 | 0.5931 |
 | **XGBoost + tuned threshold (0.35)** | **0.7771** | **0.8410** | **0.5630** | **0.7166** | **0.6306** |
 
-**Why the tuned row matters:** the same XGBoost model catches **71.7% of churners (268/374)** at threshold 0.35 instead of ~50% at 0.5 — the gain comes from the decision rule, not a bigger model.
+**Why the tuned row matters:** within the notebook-04 fit (trained on `train` only), the same model catches **71.7% of churners (268/374)** at threshold 0.35 instead of **50.5%** at 0.5 — the gain comes from the decision rule, not a bigger model.
+
+> **Two model fits appear in the table above, on purpose.** The `XGBoost (best)` row is the final model refit on `train + val` (notebook 03). The tuned-threshold row is the notebook-04 fit on `train` only, whose sweep baseline at threshold 0.5 is Recall 0.5053. Threshold tuning is only interpretable against the *same* fit — which is why the pair quoted below is 0.5053 → 0.7166, not 0.5321 → 0.7166.
 
 ## 🧠 Key Takeaways
 
 - **`tenure` is the strongest feature** — new customers churn far more than long-standing ones (confirmed by EDA + XGBoost feature importance).
 - **Imbalanced data → metric choice matters**: the Dummy baseline "scores" 73.5% accuracy but AUC = 0.5 (random) and Recall = 0. We deliberately used AUC/Recall/F1.
-- **A strong baseline is hard to beat**: Logistic Regression already reached AUC 0.84; XGBoost only edged it out (+0.002). The big win came from **threshold tuning** — Recall 0.51 → 0.72.
+- **A strong baseline is hard to beat**: Logistic Regression already reached AUC 0.84; XGBoost only edged it out (+0.002). The big win came from **threshold tuning** — Recall 0.5053 → 0.7166.
 - **ML engineers ship a decision, not a probability**: for churn, missing an at-risk customer (Recall) is costlier than a false alarm (Precision), so threshold 0.35 is the business-aligned choice.
 - **Experiments are reproducible**: every config, metric and the final model are logged in `mlruns/` (MLflow).
 
